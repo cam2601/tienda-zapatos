@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mujer — SOLE STORE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">SOLE<span>STORE</span></a>
+    <div class="nav-links">
+      <a href="hombre.html">Hombre</a>
+      <a href="index.html">← Inicio</a>
+      <a href="mujer.html" style="color:var(--accent)">Mujer</a>
+      <a href="https://wa.me/573104720389" target="_blank" class="nav-wpp">📲 WhatsApp</a>
+    </div>
+  </nav>
+
+  <main class="catalog-page">
+    <div class="catalog-header">
+      <h1>MUJER <span>.</span></h1>
+      <p class="catalog-count" id="count">Cargando...</p>
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">Ordenar:</span>
+      <button class="filter-btn active" onclick="sortProducts('default', this)">Por defecto</button>
+      <button class="filter-btn" onclick="sortProducts('precio-asc', this)">Menor precio</button>
+      <button class="filter-btn" onclick="sortProducts('precio-desc', this)">Mayor precio</button>
+    </div>
+
+    <div class="product-grid" id="grid"></div>
+
+    <a href="index.html" class="back-link">← Volver al inicio</a>
+  </main>
+
+  <script type="module">
+    import { productosMujer } from './src/js/products.js';
+
+    const WPP = "573104720389";
+    let currentProducts = [...productosMujer];
+
+    function precioNum(p) {
+      return parseInt(p.precio.replace(/\D/g, ''));
+    }
+
+    function renderGrid(products) {
+      const grid = document.getElementById('grid');
+      document.getElementById('count').textContent = `${products.length} productos`;
+      grid.innerHTML = products.map((p, i) => `
+        <div class="product-card" style="animation-delay:${i * 0.03}s">
+          <div class="product-img-wrap">
+            <span class="product-num">${String(p.id).padStart(2,'0')}</span>
+            <img src="${p.img}" alt="${p.nombre}" loading="lazy" onerror="this.style.opacity='0.2'">
+          </div>
+          <div class="product-info">
+            <p class="product-name">${p.nombre}</p>
+            <p class="product-price">${p.precio}</p>
+          </div>
+          <a class="btn-wpp"
+             href="https://wa.me/${WPP}?text=Hola!%20Me%20interesa%20el%20${encodeURIComponent(p.nombre)}%20(Ref%20${p.id})%20-%20Precio%3A%20${encodeURIComponent(p.precio)}"
+             target="_blank">
+            💬 Preguntar por WhatsApp
+          </a>
+        </div>
+      `).join('');
+    }
+
+    window.sortProducts = function(tipo, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (tipo === 'precio-asc')  currentProducts.sort((a,b) => precioNum(a) - precioNum(b));
+      if (tipo === 'precio-desc') currentProducts.sort((a,b) => precioNum(b) - precioNum(a));
+      if (tipo === 'default')     currentProducts = [...productosMujer];
+      renderGrid(currentProducts);
+    };
+
+    renderGrid(currentProducts);
+  </script>
+
+</body>
+</html>

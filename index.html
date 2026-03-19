@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SOLE STORE — Zapatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/main.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 6vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: 'SOLE';
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(180px, 28vw, 420px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.07);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .hero-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 13vw, 200px);
+      line-height: 0.9;
+      color: var(--text);
+      margin: 0 0 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 400px;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.6s;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.4rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(255, 214, 0, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.4rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── SCROLL TICKER ── */
+    .ticker-wrap {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 0.8rem 0;
+      white-space: nowrap;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #000;
+      margin: 0 2rem;
+    }
+
+    /* ── CATEGORIAS ── */
+    .categories {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+    }
+
+    .cat-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+      transition: background 0.4s ease;
+    }
+
+    .cat-card:hover::after {
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .cat-bg {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s ease;
+    }
+
+    .cat-card:hover .cat-bg {
+      transform: scale(1.05);
+    }
+
+    .cat-hombre .cat-bg {
+      background-color: #1a1a2e;
+      background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 20px);
+    }
+
+    .cat-mujer .cat-bg {
+      background-color: #2e1a1a;
+      background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 20px);
+    }
+
+    .cat-info {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 2.5rem;
+      z-index: 2;
+    }
+
+    .cat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      color: #fff;
+      line-height: 1;
+      display: block;
+      transition: letter-spacing 0.3s ease;
+    }
+
+    .cat-card:hover .cat-name {
+      letter-spacing: 0.05em;
+    }
+
+    .cat-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.8rem;
+      transition: color 0.3s, gap 0.3s;
+    }
+
+    .cat-card:hover .cat-arrow {
+      color: var(--accent);
+      gap: 0.9rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 3rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 640px) {
+      .categories { grid-template-columns: 1fr; }
+      .hero { padding: 6rem 6vw 4rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">SOLE<span>STORE</span></a>
+    <div class="nav-links">
+      <a href="hombre.html">Hombre</a>
+      <a href="mujer.html">Mujer</a>
+      <a href="https://wa.me/573104720389" target="_blank" class="nav-wpp">📲 WhatsApp</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-tag">Nueva colección 2026</p>
+    <h1 class="hero-title">
+      CAMINA<br>
+      <span>DIFERENTE</span>
+    </h1>
+    <p class="hero-sub">Zapatos que dicen quién eres antes de que hables. Calidad, estilo y actitud en cada par.</p>
+    <div class="hero-btns">
+      <a href="hombre.html" class="btn-primary">Ver colección</a>
+      <a href="https://wa.me/573104720389" target="_blank" class="btn-outline">Contactar</a>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>ZAPATOS DE CALIDAD</span>
+      <span>★</span>
+      <span>ENVÍO A TODO COLOMBIA</span>
+      <span>★</span>
+      <span>HOMBRE & MUJER</span>
+      <span>★</span>
+      <span>SOLE STORE</span>
+      <span>★</span>
+      <span>ZAPATOS DE CALIDAD</span>
+      <span>★</span>
+      <span>ENVÍO A TODO COLOMBIA</span>
+      <span>★</span>
+      <span>HOMBRE & MUJER</span>
+      <span>★</span>
+      <span>SOLE STORE</span>
+      <span>★</span>
+    </div>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <section class="categories">
+    <a href="hombre.html" class="cat-card cat-hombre">
+      <div class="cat-bg"></div>
+      <div class="cat-info">
+        <p class="cat-label">Colección</p>
+        <span class="cat-name">HOMBRE</span>
+        <div class="cat-arrow">Ver productos →</div>
+      </div>
+    </a>
+    <a href="mujer.html" class="cat-card cat-mujer">
+      <div class="cat-bg"></div>
+      <div class="cat-info">
+        <p class="cat-label">Colección</p>
+        <span class="cat-name">MUJER</span>
+        <div class="cat-arrow">Ver productos →</div>
+      </div>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">SOLE<span>STORE</span></div>
+    <p class="footer-copy">© 2026 Sole Store · Hecho con 💛 en Colombia</p>
+  </footer>
+
+</body>
+</html>
