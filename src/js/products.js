@@ -17,7 +17,7 @@ export const productosHombre = [
   { id: 10, img: "imagenes-hombre/zapato10.png", nombre: "BOSS",       precio: "$150.000" },
   { id: 11, img: "imagenes-hombre/zapato11.png", nombre: "BOSS",        precio: "$150.000" },
   { id: 12, img: "imagenes-hombre/zapato12.png", nombre: "BOSS",        precio: "$150.000" },
-  { id: 13, img: "imagenes-hombre/zapato13.png", nombre: "Tenis Street",      precio: "$152.000" },
+  { id: 13, img: "imagenes-hombre/zapato13.png", nombre: "NIKE AF1",      precio: "$150.000" },
   { id: 14, img: "imagenes-hombre/zapato14.png", nombre: "Trail Runner",      precio: "$172.000" },
   { id: 15, img: "imagenes-hombre/zapato15.png", nombre: "Classic White",     precio: "$145.000" },
   { id: 16, img: "imagenes-hombre/zapato16.png", nombre: "Bota Táctica",      precio: "$195.000" },
