@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════
-//  SOLE STORE — products.js
+//  C & D STORE — products.js
 //  ¡EDITA AQUÍ para cambiar nombres y precios!
 //  Solo cambia "nombre" y "precio" de cada producto.
 // ═══════════════════════════════════════════════════════
